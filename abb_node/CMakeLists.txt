@@ -3,6 +3,8 @@ include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 
 rosbuild_init()
 
+find_package(Boost COMPONENTS system filesystem REQUIRED)
+
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
@@ -25,4 +27,6 @@ include_directories(${MATVEC_PATH})
 link_directories(${PROJECT_SOURCE_DIR}/lib)
 
 rosbuild_add_executable(abb_node src/abb_node.cpp)
+target_link_libraries(abb_node ${Boost_FILESYSTEM_LIBRARY})
+target_link_libraries(abb_node ${Boost_SYSTEM_LIBRARY})
 target_link_libraries(abb_node abb_comm matVec)
